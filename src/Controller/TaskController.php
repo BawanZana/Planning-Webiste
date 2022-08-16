@@ -191,7 +191,7 @@ class TaskController {
             if (in_array($fileExtension, $allowedfileExtensions))
             {
                 // directory in which the uploaded file will be moved
-                $uploadFileDir = 'C:\xampp\htdocs\websitePlanning\uploads/';
+                $uploadFileDir = '../uploads/';
                 $dest_path = $uploadFileDir. $newFileName;
                 // var_dump($dest_path);
                 if(move_uploaded_file($fileTmpPath, $dest_path)) 
@@ -274,7 +274,7 @@ class TaskController {
             if (in_array($fileExtension, $allowedfileExtensions))
             {
                 // directory in which the uploaded file will be moved
-                $uploadFileDir = 'C:\xampp\htdocs\websitePlanning\uploads/';
+                $uploadFileDir = '../uploads/';
                 $dest_path = $uploadFileDir. $newFileName;
                
                 if(move_uploaded_file($fileTmpPath, $dest_path)) 
