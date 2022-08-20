@@ -1,25 +1,21 @@
 <?php
+
 namespace Src\Table;
 
 
 
-class BoardModel {
+class BoardModel extends BaseModel
+{
 
-    private $db = null;
-
-    public function __construct($db)
-    {
-        $this->db = $db;
-    }
-
+    //Finding all boards.
     public function findAll()
     {
         $statement = "
             SELECT 
-            boards.id,boards.name as board_name,boards.flag, users.name as user_name
+            boards.id,boards.name as board_name, users.name as user_name
             FROM
                 boards
-            inner join users on boards.user_id = users.id;    
+            inner join users on boards.user_id = users.id order by boards.id;    
         ";
 
         try {
@@ -31,11 +27,12 @@ class BoardModel {
         }
     }
 
+    //Finding specific board.
     public function find($id)
     {
         $statement = "
             SELECT 
-            boards.id,boards.name as board_name,boards.flag, users.name as user_name
+            boards.id,boards.name as board_name, users.name as user_name
             FROM
             boards
             inner join users on boards.user_id = users.id
@@ -49,16 +46,17 @@ class BoardModel {
             return $result;
         } catch (\PDOException $e) {
             exit($e->getMessage());
-        }    
+        }
     }
 
-    public function insert(Array $input)
+    //Inserting specific board.
+    public function insert(array $input)
     {
         $statement = "
             INSERT INTO boards 
-                (name,user_id, flag)
+                (name,user_id)
             VALUES
-                (:name, :user_id, :flag);
+                (:name,:user_id);
         ";
 
         try {
@@ -66,24 +64,23 @@ class BoardModel {
             $statement->execute(array(
                 'name' => $input['name'],
                 'user_id'  => $_SESSION['user_id'],
-                'flag' => $input['flag'] ?? 1,
-                
+
             ));
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
-        }    
+        }
     }
 
-    public function update($id, Array $input)
+    //Updating specific board.
+    public function update($id, array $input)
     {
-        
+
         $statement = "
             UPDATE boards
             SET 
                 name = :name,
                 user_id  = :user_id,
-                flag = :flag,
                 updated_at=:updated_at
             WHERE id = :id;
         ";
@@ -94,16 +91,16 @@ class BoardModel {
                 'id' => (int) $id,
                 'name' => $input['name'],
                 'user_id'  => $_SESSION['user_id'],
-                'flag' => $input['flag'] ?? 1,
                 'updated_at' => date('Y-m-d h:i:s'),
-                
+
             ));
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
-        }    
+        }
     }
 
+    //Deleting specific board.
     public function delete($id)
     {
         $statement = "
@@ -117,6 +114,6 @@ class BoardModel {
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
-        }    
+        }
     }
 }

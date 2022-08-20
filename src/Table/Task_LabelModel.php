@@ -1,15 +1,11 @@
 <?php
+
 namespace Src\Table;
 
-class Task_LabelModel {
+class Task_LabelModel extends BaseModel
+{
 
-    private $db = null;
-
-    public function __construct($db)
-    {
-        $this->db = $db;
-    }
-
+    //Finding all association between labels and specific task.
     public function findAll()
     {
         $statement = "
@@ -19,7 +15,7 @@ class Task_LabelModel {
                 tasks_labels
             inner join labels on  tasks_labels.label_id=labels.id 
             inner join tasks on  tasks_labels.task_id=tasks.id  
-            WHERE tasks_labels.task_id='".$_GET['task_id']."' ;
+            WHERE tasks_labels.task_id='" . $_GET['task_id'] . "' ;
         ";
 
         try {
@@ -31,6 +27,8 @@ class Task_LabelModel {
         }
     }
 
+
+    //Finding specific association.
     public function find($id)
     {
         $statement = "
@@ -50,10 +48,32 @@ class Task_LabelModel {
             return $result;
         } catch (\PDOException $e) {
             exit($e->getMessage());
-        }    
+        }
     }
 
-    public function insert(Array $input)
+    //Finding if there is an association already excited.
+    public function FindBeforeInsert($task_id,$label_id)
+    {
+        $statement = "
+        SELECT 
+        tasks_labels.id
+        FROM
+            tasks_labels
+        WHERE tasks_labels.task_id = ? and tasks_labels.label_id=?;
+        ";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array($task_id,$label_id));
+            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return $result;
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+    }
+
+    //Inserting new association between specific task and label. 
+    public function insert(array $input)
     {
         $statement = "
             INSERT INTO tasks_labels
@@ -67,16 +87,16 @@ class Task_LabelModel {
             $statement->execute(array(
                 'task_id' => $input['task_id'],
                 'label_id'  => $input['label_id'],
-                
+
             ));
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
-        }    
+        }
     }
 
-    
 
+    //Deleting specific association.
     public function delete($id)
     {
         $statement = "
@@ -90,6 +110,6 @@ class Task_LabelModel {
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
-        }    
+        }
     }
 }

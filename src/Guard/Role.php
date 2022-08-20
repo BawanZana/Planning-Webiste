@@ -1,9 +1,11 @@
 <?php
-namespace Src\middlware;
+namespace Src\Guard;
 
+//Checking role of the logged in user. 
 class Role
 {
-    public function productOwner()
+    
+    public static function productOwner()
     {
         if($_SESSION['user_type'] == 1)
         {
@@ -15,7 +17,7 @@ class Role
         }
     }
 
-    public function developer()
+    public static function developer()
     {
         if($_SESSION['user_type'] == 2)
         {
@@ -27,7 +29,7 @@ class Role
         }
     }
 
-    public function tester()
+    public static function tester()
     {
         if($_SESSION['user_type'] == 3)
         {
@@ -39,6 +41,3 @@ class Role
         }
     }
 }
-
-
-?>

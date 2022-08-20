@@ -1,35 +1,36 @@
 <?php
 namespace Src\Controller;
 
-use Src\middlware\Role;
+use Src\Guard\Role;
 use Src\Table\UserModel;
 
-// use Src\TableGateways\TaskModel;
+
 
 class UserController {
 
     private $db;
     private $requestMethod;
     private $Id;
-    private $role;
+    
     private $User;
 
-    public function __construct($db, $requestMethod, $Id)
+    public function __construct($requestMethod, $Id)
     {
-        $this->db = $db;
+        
         $this->requestMethod = $requestMethod;
         $this->Id = $Id;
-        $this->role=new Role();
-        $this->User = new UserModel($db);
+        
+        $this->User = new UserModel();
     }
 
     public function processRequest()
     {
         switch ($this->requestMethod) {
+            //Method determination.
             case 'GET':
                 if ($this->Id) {
                     $response = $this->getUser($this->Id);
-                } elseif($this->role->productOwner()) {
+                } elseif(Role::productOwner()) {
                     $response = $this->getAllUsers();
                 }
                 else{
@@ -59,6 +60,7 @@ class UserController {
         
     }
 
+    //Getting all users.
     private function getAllUsers()
     {
         $result = $this->User->findAll();
@@ -67,6 +69,7 @@ class UserController {
         return $response;
     }
 
+    //Getting specific user.
     private function getUser($id)
     {
         $result = $this->User->find($id);
@@ -78,13 +81,12 @@ class UserController {
         return $response;
     }
 
+    //Creating User.
     private function createUserFromRequest()
     {
-        // var_dump($_POST['name']);
-        // exit;
+        
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
-        // var_dump($input);
-        // exit;
+        
         if (! $this->validateUser($input)) {
             return $this->unprocessableEntityResponse();
         }
@@ -94,6 +96,7 @@ class UserController {
         return $response;
     }
 
+    //Updating specific user.
     private function updateUserFromRequest($id)
     {
         $result = $this->User->find($id);
@@ -106,10 +109,11 @@ class UserController {
         }
         $this->User->update($id, $input);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = null;
+        $response['body'] = "User Updated";
         return $response;
     }
 
+    //Deleting specific user.
     private function deleteUser($id)
     {
         $result = $this->User->find($id);
@@ -123,9 +127,10 @@ class UserController {
         return $response;
     }
 
+    //Checking that the user filled all required fields or not.
     private function validateUser($input)
     {
-        // var_dump($input['name']);
+        
         if (! isset($input['name'])) {
             return false;
         }
@@ -135,12 +140,11 @@ class UserController {
         if (! isset($input['password'])) {
             return false;
         }
-        // if (! isset($input['user_type'])) {
-        //     return false;
-        // }
+        
         return true;
     }
 
+    //This function returning response if validateUser function return false.
     private function unprocessableEntityResponse()
     {
         $response['status_code_header'] = 'HTTP/1.1 422 Unprocessable Entity';
@@ -150,10 +154,11 @@ class UserController {
         return $response;
     }
 
+    //This function returning response if specific data that required not excited or if the requested method not matching any methods in the above switch case.
     private function notFoundResponse()
     {
         $response['status_code_header'] = 'HTTP/1.1 404 Not Found';
-        $response['body'] = null;
+        $response['body'] = "404 Not Found";
         return $response;
     }
 }

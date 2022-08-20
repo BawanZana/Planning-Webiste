@@ -1,15 +1,11 @@
 <?php
+
 namespace Src\Table;
 
-class UserModel {
+class UserModel extends BaseModel
+{
 
-    private $db = null;
-
-    public function __construct($db)
-    {
-        $this->db = $db;
-    }
-
+    //Finding all users.
     public function findAll()
     {
         $statement = "
@@ -28,6 +24,7 @@ class UserModel {
         }
     }
 
+    //Finding specific user.
     public function find($id)
     {
         $statement = "
@@ -45,10 +42,40 @@ class UserModel {
             return $result;
         } catch (\PDOException $e) {
             exit($e->getMessage());
-        }    
+        }
     }
 
-    public function insert(Array $input)
+    //Checking if the specific email excited or not.
+    public function findEmail($email)
+    {
+
+        $statement = "
+            SELECT 
+                id,name, email, user_type, password
+            FROM
+            users
+            WHERE (email = ?);
+        ";
+
+        try {
+            $statement = $this->db->prepare($statement);
+
+
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                exit('Email is not valid!');
+            }
+
+
+            $statement->execute(array($email));
+            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return $result;
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+    }
+
+    //inserting new user.
+    public function insert(array $input)
     {
         $statement = "
             INSERT INTO users 
@@ -57,34 +84,35 @@ class UserModel {
                 (:name, :email, :password,:user_type);
         ";
 
-       
+
         try {
             $statement = $this->db->prepare($statement);
 
-            $input['email']=htmlspecialchars(addslashes($input['email']) );
-            $input['password']=htmlspecialchars(addslashes($input['password']));
+            $input['email'] = htmlspecialchars(addslashes($input['email']));
+            $input['password'] = htmlspecialchars(addslashes($input['password']));
             if (!filter_var($input['email'], FILTER_VALIDATE_EMAIL)) {
                 exit('Email is not valid!');
             }
             if (strlen($input['password']) > 20 || strlen($input['password']) < 5) {
                 exit('Password must be between 5 and 20 characters long!');
             }
-    
+
 
             $statement->execute(array(
                 'name' => $input['name'],
                 'email'  => $input['email'],
                 'password' => password_hash($input['password'], PASSWORD_DEFAULT),
                 'user_type' => $input['user_type'],
-                
+
             ));
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
-        }    
+        }
     }
 
-    public function update($id, Array $input)
+    //updating specific user.
+    public function update($id, array $input)
     {
         date_default_timezone_get();
         $statement = "
@@ -101,8 +129,8 @@ class UserModel {
         try {
             $statement = $this->db->prepare($statement);
 
-            $input['email']=htmlspecialchars(addslashes($input['email']) );
-            $input['password']=htmlspecialchars(addslashes($input['password']));
+            $input['email'] = htmlspecialchars(addslashes($input['email']));
+            $input['password'] = htmlspecialchars(addslashes($input['password']));
             if (!filter_var($input['email'], FILTER_VALIDATE_EMAIL)) {
                 exit('Email is not valid!');
             }
@@ -117,14 +145,15 @@ class UserModel {
                 'password' => password_hash($input['password'], PASSWORD_DEFAULT),
                 'user_type' => $_SESSION['user_type'],
                 'updated_at' => date('Y-m-d h:i:s'),
-                
+
             ));
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
-        }    
+        }
     }
 
+    //deleting specific user.
     public function delete($id)
     {
         $statement = "
@@ -138,6 +167,6 @@ class UserModel {
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
-        }    
+        }
     }
 }

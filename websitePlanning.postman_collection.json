@@ -20,7 +20,7 @@
 						},
 						{
 							"key": "password",
-							"value": "12345678",
+							"value": "12345",
 							"type": "text"
 						}
 					]
@@ -75,7 +75,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"bawan zana\",\r\n    \"email\":\"bawanzana@gmail.com\",\r\n    \"password\":\"12345678\"\r\n}"
+					"raw": "{\r\n    \"name\":\"bawan zana khzer\",\r\n    \"email\":\"bawanzana@gmail.com\",\r\n    \"password\":\"12345678\"\r\n}"
 				},
 				"url": {
 					"raw": "http://127.0.0.1:8000/users",
@@ -214,7 +214,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"updated3 board\"\r\n}"
+					"raw": "{\r\n    \"name\":\"updated3 board1\"\r\n}"
 				},
 				"url": {
 					"raw": "http://127.0.0.1:8000/boards/1",
@@ -241,7 +241,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"board test\",\r\n    \"flag\":1\r\n}"
+					"raw": "{\r\n    \"name\":\"board test 5\"\r\n    \r\n}"
 				},
 				"url": {
 					"raw": "http://127.0.0.1:8000/boards",
@@ -266,7 +266,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8000/boards/2",
+					"raw": "http://127.0.0.1:8000/boards/3",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -277,7 +277,7 @@
 					"port": "8000",
 					"path": [
 						"boards",
-						"2"
+						"3"
 					]
 				}
 			},
@@ -289,7 +289,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8000/statuses?board_id=3",
+					"raw": "http://127.0.0.1:8000/statuses?board_id=1",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -304,7 +304,7 @@
 					"query": [
 						{
 							"key": "board_id",
-							"value": "3"
+							"value": "1"
 						}
 					]
 				}
@@ -313,18 +313,11 @@
 		},
 		{
 			"name": "getStatuse",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \r\n    \"name\": \"to-do\",\r\n    \"description\": \"updated\",\r\n    \"flag\": 1\r\n}"
-				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/statuses/2?board_id=1",
+					"raw": "http://127.0.0.1:8000/statuses/2",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -336,12 +329,6 @@
 					"path": [
 						"statuses",
 						"2"
-					],
-					"query": [
-						{
-							"key": "board_id",
-							"value": "1"
-						}
 					]
 				}
 			},
@@ -354,7 +341,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"this one for testing\",\r\n    \"description\": \"test\",\r\n    \"flag\": 1,\r\n    \"board_id\":1\r\n}"
+					"raw": "{\r\n    \"name\": \"this one for testing\",\r\n    \"description\": \"test 2\",\r\n    \"board_id\":3\r\n}"
 				},
 				"url": {
 					"raw": "http://127.0.0.1:8000/statuses",
@@ -380,7 +367,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \r\n    \"name\": \"testing url\",\r\n    \"description\": \"updated3\",\r\n    \"flag\": 1,\r\n    \"board_id\":3\r\n}"
+					"raw": "{\r\n    \r\n    \"name\": \"testing url\",\r\n    \"description\": \"updated4\",\r\n    \"board_id\":3\r\n}"
 				},
 				"url": {
 					"raw": "http://127.0.0.1:8000/statuses/8",
@@ -406,7 +393,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8000/statuses/9",
+					"raw": "http://127.0.0.1:8000/statuses/12",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -417,7 +404,7 @@
 					"port": "8000",
 					"path": [
 						"statuses",
-						"9"
+						"12"
 					]
 				}
 			},
@@ -425,18 +412,11 @@
 		},
 		{
 			"name": "getAllTasks",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": []
-				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/tasks",
+					"raw": "http://127.0.0.1:8000/tasks?order=ASC",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -451,13 +431,22 @@
 					"query": [
 						{
 							"key": "filter",
-							"value": "dev-review",
+							"value": "important",
 							"disabled": true
 						},
 						{
 							"key": "search",
 							"value": "again",
 							"disabled": true
+						},
+						{
+							"key": "status",
+							"value": "3",
+							"disabled": true
+						},
+						{
+							"key": "order",
+							"value": "ASC"
 						}
 					]
 				}
@@ -497,7 +486,7 @@
 					"formdata": [
 						{
 							"key": "task_name",
-							"value": "task3",
+							"value": "task6",
 							"type": "text"
 						},
 						{
@@ -508,7 +497,7 @@
 						{
 							"key": "task_image",
 							"type": "file",
-							"src": "/C:/Users/user/Pictures/a123f64bc91c5f83f76b16faee0c90ae.jpg"
+							"src": "/C:/Users/user/Pictures/Grey.jpg"
 						},
 						{
 							"key": "task_due_date",
@@ -517,13 +506,18 @@
 						},
 						{
 							"key": "status_id",
-							"value": "2",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "_method",
+							"value": "PUT",
 							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/tasks/7",
+					"raw": "http://127.0.0.1:8000/tasks/6",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -534,7 +528,7 @@
 					"port": "8000",
 					"path": [
 						"tasks",
-						"7"
+						"6"
 					]
 				}
 			},
@@ -561,7 +555,7 @@
 						{
 							"key": "task_image",
 							"type": "file",
-							"src": "/C:/Users/user/Pictures/Capture6.PNG"
+							"src": "/C:/Users/user/Pictures/Capture13.PNG"
 						},
 						{
 							"key": "task_due_date",
@@ -598,7 +592,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8000/tasks/15",
+					"raw": "http://127.0.0.1:8000/tasks/21",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -609,7 +603,7 @@
 					"port": "8000",
 					"path": [
 						"tasks",
-						"15"
+						"21"
 					]
 				}
 			},
@@ -667,7 +661,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"test\",\r\n    \"flag\":1\r\n}"
+					"raw": "{\r\n    \"name\":\"test33\"\r\n}"
 				},
 				"url": {
 					"raw": "http://127.0.0.1:8000/labels",
@@ -693,10 +687,10 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"update\",\r\n    \"flag\":1\r\n}"
+					"raw": "{\r\n    \"name\":\"updated\"\r\n}"
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/labels/4",
+					"raw": "http://127.0.0.1:8000/labels/5",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -707,7 +701,7 @@
 					"port": "8000",
 					"path": [
 						"labels",
-						"4"
+						"5"
 					]
 				}
 			},
@@ -719,7 +713,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8000/labels/2",
+					"raw": "http://127.0.0.1:8000/labels/5",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -730,7 +724,7 @@
 					"port": "8000",
 					"path": [
 						"labels",
-						"2"
+						"5"
 					]
 				}
 			},
@@ -743,7 +737,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"label_id\":3,\r\n    \"task_id\":3\r\n}"
+					"raw": "{\r\n    \"label_id\":1,\r\n    \"task_id\":12\r\n}"
 				},
 				"url": {
 					"raw": "http://127.0.0.1:8000/bind_label_to_task",
@@ -826,7 +820,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8000/bind_label_to_task/6",
+					"raw": "http://127.0.0.1:8000/bind_label_to_task/7",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -837,7 +831,7 @@
 					"port": "8000",
 					"path": [
 						"bind_label_to_task",
-						"6"
+						"7"
 					]
 				}
 			},

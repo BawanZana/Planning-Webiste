@@ -24,7 +24,6 @@ $statement = <<<EOS
     CREATE TABLE IF NOT EXISTS boards (
             id BIGINT NOT NULL AUTO_INCREMENT,
             name VARCHAR(100) NOT NULL,
-            flag INT DEFAULT 1,
             user_id BIGINT DEFAULT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP NULL DEFAULT NULL,
@@ -43,7 +42,6 @@ $statement = <<<EOS
                 id BIGINT NOT NULL AUTO_INCREMENT,
                 name VARCHAR(100) NOT NULL,
                 description VARCHAR(300)  DEFAULT NULL,
-                flag INT DEFAULT 1,
                 user_id BIGINT DEFAULT NULL,
                 board_id BIGINT DEFAULT NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -67,7 +65,6 @@ $statement = <<<EOS
                 id BIGINT NOT NULL AUTO_INCREMENT,
                 name VARCHAR(100) NOT NULL,
                 description VARCHAR(300)  DEFAULT NULL,
-                flag INT DEFAULT 1,
                 due_date DATE,
                 image VARCHAR(255) DEFAULT NULL,
                 user_id BIGINT DEFAULT NULL,
@@ -90,7 +87,6 @@ $statement = <<<EOS
         CREATE TABLE IF NOT EXISTS labels (
                 id BIGINT NOT NULL AUTO_INCREMENT,
                 name VARCHAR(100) NOT NULL,
-                flag INT DEFAULT 1,
                 user_id BIGINT DEFAULT NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP NULL DEFAULT NULL,

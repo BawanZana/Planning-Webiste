@@ -1,15 +1,11 @@
 <?php
+
 namespace Src\Table;
 
-class LogModel {
+class LogModel extends BaseModel
+{
 
-    private $db = null;
-
-    public function __construct($db)
-    {
-        $this->db = $db;
-    }
-
+    //Finding all logs. 
     public function findAll()
     {
         $statement = "
@@ -28,9 +24,10 @@ class LogModel {
         }
     }
 
+    //Finding specific log. 
     public function find($id)
     {
-        // var_dump("hi");
+        
         $statement = "
             SELECT 
             logs.id,logs.task,logs.user,logs.action
@@ -47,10 +44,11 @@ class LogModel {
             return $result;
         } catch (\PDOException $e) {
             exit($e->getMessage());
-        }    
+        }
     }
 
-    public function insert($task_id,$task_name)
+    //Inserting new log.
+    public function insert($task_id, $task_name)
     {
         $statement = "
             INSERT INTO logs 
@@ -71,12 +69,13 @@ class LogModel {
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
-        }    
+        }
     }
 
-    public function update($id, Array $input)
+    //Updating logs. (note this function still not used in this program) 
+    public function update($id, array $input)
     {
-        
+
         $statement = "
             UPDATE logs
             SET 
@@ -95,14 +94,15 @@ class LogModel {
                 'task'  => $input['task'],
                 'user' => $input['user'],
                 'action' => $input['action'],
-              
+
             ));
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
-        }    
+        }
     }
 
+    //Deleting specific log. (note this function still not used in this program) 
     public function delete($id)
     {
         $statement = "
@@ -116,6 +116,6 @@ class LogModel {
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
-        }    
+        }
     }
 }

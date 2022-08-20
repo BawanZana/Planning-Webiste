@@ -1,20 +1,16 @@
 <?php
+
 namespace Src\Table;
 
-class LabelModel {
+class LabelModel extends BaseModel
+{
 
-    private $db = null;
-
-    public function __construct($db)
-    {
-        $this->db = $db;
-    }
-
+    //Finding all labels.
     public function findAll()
     {
         $statement = "
             SELECT 
-                labels.id,labels.name as label_name, labels.flag, users.name as user_name
+                labels.id,labels.name as label_name,users.name as user_name
             FROM
                 labels
             inner join users on labels.user_id=users.id    ;
@@ -29,11 +25,12 @@ class LabelModel {
         }
     }
 
+    //Finding specific label.
     public function find($id)
     {
         $statement = "
         SELECT 
-            labels.id,labels.name as label_name, labels.flag, users.name as user_name
+            labels.id,labels.name as label_name,users.name as user_name
         FROM
             labels
         inner join users on labels.user_id=users.id
@@ -47,40 +44,40 @@ class LabelModel {
             return $result;
         } catch (\PDOException $e) {
             exit($e->getMessage());
-        }    
+        }
     }
 
-    public function insert(Array $input)
+    //Inserting new label.
+    public function insert(array $input)
     {
         $statement = "
             INSERT INTO labels 
-                (name, flag, user_id)
+                (name,user_id)
             VALUES
-                (:name, :flag, :user_id);
+                (:name,:user_id);
         ";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute(array(
                 'name' => $input['name'],
-                'flag'  => $input['flag'] ?? 1,
                 'user_id' => $_SESSION['user_id'],
-                
+
             ));
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
-        }    
+        }
     }
 
-    public function update($id, Array $input)
+    //Updating specific label.
+    public function update($id, array $input)
     {
-        
+
         $statement = "
             UPDATE labels
             SET 
             name = :name,
-            flag  = :flag,
             user_id = :user_id,
             updated_at=:updated_at
                 
@@ -92,17 +89,17 @@ class LabelModel {
             $statement->execute(array(
                 'id' => (int) $id,
                 'name' => $input['name'],
-                'flag'  => $input['flag'] ?? 1,
                 'user_id' => $_SESSION['user_id'],
                 'updated_at' => date('Y-m-d h:i:s'),
-              
+
             ));
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
-        }    
+        }
     }
 
+    //Deleting specific label.
     public function delete($id)
     {
         $statement = "
@@ -116,6 +113,6 @@ class LabelModel {
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
-        }    
+        }
     }
 }
