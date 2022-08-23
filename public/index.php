@@ -52,8 +52,10 @@ if ($uri[1] == 'login') {
         $controller = new LoginController($requestMethod);
         $controller->processRequest();
         exit;
-    } else {
-        exit("login form");
+    } else{
+        $response['status_code_header'] = 'HTTP/1.1 404 Not Found';
+        $response['body'] = "404 Not Found";
+        exit($response['body']);
     }
 }
 
