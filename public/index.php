@@ -43,6 +43,10 @@ if ($uri[1] == 'login') {
         exit("you are already logged in");
     }
     if ($requestMethod == "POST") {
+        if (!(isset($_POST['email'])) || !(isset($_POST['password']))) {
+
+            exit('Please fill both the email and password fields!');
+        }
         $_POST['email'] = htmlspecialchars(addslashes($_POST['email']));
         $_POST['password'] = htmlspecialchars(addslashes($_POST['password']));
         $controller = new LoginController($requestMethod);

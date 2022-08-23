@@ -36,25 +36,23 @@ class LoginController
                 $response = $this->notFoundResponse();
                 break;
         }
-        // header($response['status_code_header']);
-        // if ($response['body']) {
-        //     echo "login";
-        // }
+        header($response['status_code_header']);
+        if ($response['body']) {
+            echo $response['body'];
+        }
     }
 
     //Checking email and password for login. 
     private function LoginFromRequest($email)
     {
-
-        if (!isset($_POST['email'], $_POST['password'])) {
-
-            exit('Please fill both the email and password fields!');
-        }
+       
+        //because i using $_POST['email] and $_POST['password'] inside index.php so this 
+        //if condition in here become useless that why i moved it into index.php.
+ 
         $result = $this->user->findEmail($email);
 
+        
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = json_encode($result);
-
 
         if (password_verify($this->password, $result[0]['password'])) {
 
@@ -64,12 +62,16 @@ class LoginController
             $_SESSION['email'] = $result[0]['email'];
             $_SESSION['user_id'] = $result[0]['id'];
             $_SESSION['user_type'] = $result[0]['user_type'];
-            
-            echo "login";
+            $response['body'] = "login";
+            return $response;
         } else {
             // Incorrect password
-            echo 'Incorrect username and/or password!';
+            $response['body'] = "Incorrect username and/or password!";
+            return $response;
+            
         }
+        
+        
     }
 
     //This function returning response if the requested method not matching any methods in the above switch case.
