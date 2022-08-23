@@ -36,10 +36,10 @@ class LoginController
                 $response = $this->notFoundResponse();
                 break;
         }
-        header($response['status_code_header']);
-        if ($response['body']) {
-            echo "login";
-        }
+        // header($response['status_code_header']);
+        // if ($response['body']) {
+        //     echo "login";
+        // }
     }
 
     //Checking email and password for login. 
@@ -65,7 +65,7 @@ class LoginController
             $_SESSION['user_id'] = $result[0]['id'];
             $_SESSION['user_type'] = $result[0]['user_type'];
             
-            return $response;
+            echo "login";
         } else {
             // Incorrect password
             echo 'Incorrect username and/or password!';

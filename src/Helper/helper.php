@@ -11,5 +11,9 @@ function getConnection()
 //Authentication check
 function authenticated()
 {
-    return $_SESSION['logged_in'];
+    if(isset($_SESSION['logged_in']))
+    {
+        return $_SESSION['logged_in'];
+    }
+    
 }
