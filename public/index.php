@@ -159,10 +159,12 @@ if (authenticated()) {
 
                 $controller = new UserController($requestMethod, $Id);
                 $controller->processRequest();
+                exit;
             } else {
 
                 $controller = new UserController($requestMethod, $_SESSION['user_id']);
                 $controller->processRequest();
+                exit;
             }
         }
     }
@@ -173,9 +175,10 @@ if (authenticated()) {
 
             $controller = new LogController($requestMethod, $Id);
             $controller->processRequest();
+            exit;
         } else {
             $result = "you can't access this part";
-            echo $result;
+            exit($result);
         }
     }
 
@@ -184,6 +187,7 @@ if (authenticated()) {
 
         $controller = new LabelController($requestMethod, $Id);
         $controller->processRequest();
+        exit;
     }
 
     //Logout API.
